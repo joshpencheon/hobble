@@ -44,16 +44,14 @@ class TestScheduler < Minitest::Test
 
     describe '#run' do
       it 'should call schedule items fairly' do
-        expected_order = [[:a, 4], [:b, 1], [:b, 3], [:a, 2], [:b, 6], [:a, 3]]
-        actual_order   = []
-
         @scheduler.run do |name, items|
-          item = items.shift
-          sleep(item.to_f / 1e4)
-          actual_order << [name, item]
-        end
+          collection   = @scheduler.collections.find { |c| c.name == name }
+          minimum_debt = @scheduler.collections.map(&:debt).min
+          assert_equal minimum_debt, collection.debt
 
-        assert_equal expected_order, actual_order
+          # Accrue some debt:
+          sleep(items.shift.to_f / 1e4)
+        end
       end
     end
 
