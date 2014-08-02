@@ -3,7 +3,7 @@ hobble
 
 Ruby debt-based scheduling implementation.
 
-**Aim:** Schedule collection of grouped items in a way that it is perceived to be fair.
+**Aim:** Schedule a collection of grouped items in a way that is perceived to be fair.
 
 Usage
 =====
