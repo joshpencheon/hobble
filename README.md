@@ -1,6 +1,8 @@
 hobble
 ======
 
+[![Build Status](https://travis-ci.org/joshpencheon/hobble.svg?branch=master)](https://travis-ci.org/joshpencheon/hobble)
+
 Ruby debt-based scheduling implementation.
 
 **Aim:** Schedule a collection of grouped items in a way that is perceived to be fair.
