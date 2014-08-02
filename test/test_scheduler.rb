@@ -5,7 +5,7 @@ class TestScheduler < Minitest::Test
 
   describe 'Hobble::Scheduler' do
     before do
-      @groups    = { a: [4,2,3], b: [1,3,6] }
+      @groups    = { :a => [4,2,3], :b => [1,3,6] }
       @scheduler = Hobble::Scheduler.new(@groups)
     end
 
@@ -19,13 +19,13 @@ class TestScheduler < Minitest::Test
 
     describe '#schedule' do
       it 'should append to existing collections' do
-        @scheduler.schedule(a: [4,5])
+        @scheduler.schedule(:a => [4,5])
         assert_equal 2, @scheduler.collections.length
         assert_collection(:a, [4,2,3,4,5])
       end
 
       it 'should create new collections' do
-        @scheduler.schedule(c: [1,2])
+        @scheduler.schedule(:c => [1,2])
         assert_equal 3, @scheduler.collections.length
         assert_collection(:c, [1,2])
       end
