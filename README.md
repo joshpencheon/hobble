@@ -5,6 +5,21 @@ Ruby debt-based scheduling implementation.
 
 **Aim:** Schedule a collection of grouped items in a way that is perceived to be fair.
 
+Installation
+=====
+
+Hobble is available as a gem, so simply run:
+
+```
+gem install hobble
+```
+
+Alternatively, you can add `hobble` to your Gemfile:
+
+```ruby
+gem 'hobble'
+```
+
 Usage
 =====
 
