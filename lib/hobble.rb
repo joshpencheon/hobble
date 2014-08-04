@@ -10,8 +10,8 @@ end
 #   john: [:task1, :task2, :task3]
 # })
 #
-# schedule.run do |name, task|
-#   Task.process(task, for: name)
+# schedule.run do |name, tasks|
+#   Task.process(tasks.shift, for: name)
 # end
 #
 module Hobble
