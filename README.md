@@ -38,8 +38,8 @@ Usage
 })
 
 # Now run them fairly:
-@hobble.run do |user, task|
-  Task.process(task, for: user)
+@hobble.run do |user, tasks|
+  Task.process(tasks.shift, for: user)
 end
 ```
 
@@ -50,3 +50,12 @@ Processing time is made available to the pending collection with the least
 accrued time. The sort is not stable, to encourage variation in the case of a tie.
 
 When there are no matching collections, hobble's work is done!
+
+TODO
+=====
+
+```ruby
+# Have #schedule receive a callable object, to be executed after each task completes:
+@hobble = Hobble.schedule(-> { Task.pending.group_by(&:user) })
+@hobble.run { |user, tasks| ... }
+```
