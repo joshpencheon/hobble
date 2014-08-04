@@ -63,4 +63,7 @@ TODO
   # This loop will run for ever, so escape:
   break if task_limit_reached?
 end
+
+# The ability to run for a fixed maximum number of iterations:
+@hobble.run(3) { |user, tasks| ... }
 ```
