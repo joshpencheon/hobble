@@ -57,5 +57,10 @@ TODO
 ```ruby
 # Have #schedule receive a callable object, to be executed after each task completes:
 @hobble = Hobble.schedule(-> { Task.pending.group_by(&:user) })
-@hobble.run { |user, tasks| ... }
+@hobble.run do |user, tasks|
+  Task.process(tasks.shift, for: user)
+  
+  # This loop will run for ever, so escape:
+  break if task_limit_reached?
+end
 ```
