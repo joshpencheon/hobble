@@ -3,10 +3,13 @@ module Hobble
   # how long they are taking to process.
   class Collection
     attr_reader :name, :items, :debt
+    attr_accessor :weight
 
-    def initialize(name, debt = 0)
+    def initialize(name, debt = 0, weight = 1)
+      self.weight = weight
+
       @name  = name
-      @debt  = debt
+      @debt  = debt * weight
       @items = []
     end
 
@@ -24,9 +27,7 @@ module Hobble
     # Execute the given `action' in
     # the account of this collection.
     def clock(&action)
-      t = Time.now
-      action.call(name, items)
-      @debt += (Time.now - t)
+      @debt += weight * time(&action)
     end
 
     # Worth giving this collection a go?
@@ -39,6 +40,14 @@ module Hobble
     def <=>(other)
       value = debt <=> other.debt
       value == 0 ? 1 : value
+    end
+
+    private
+
+    def time(&block)
+      t = Time.now
+      block.call(name, items)
+      Time.now - t
     end
   end
 end

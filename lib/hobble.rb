@@ -17,7 +17,7 @@ end
 module Hobble
   # Returns a new scheduler for the
   # given grouped items.
-  def self.schedule(groups)
-    Hobble::Scheduler.new(groups)
+  def self.schedule(*groups, &block)
+    Hobble::Scheduler.new(*groups, &block)
   end
 end

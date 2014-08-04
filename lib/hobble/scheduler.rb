@@ -4,9 +4,14 @@ module Hobble
   class Scheduler
     attr_reader :collections
 
-    def initialize(groups = {})
+    def initialize(groups = nil, &populator)
+      if groups && populator
+        raise(ArgumentError, 'specify block or groups, not both!')
+      end
+
       @collections = []
-      schedule(groups)
+      @populator   = populator
+      schedule(groups || {})
     end
 
     # Schedule the given groups, creating
@@ -17,6 +22,14 @@ module Hobble
       end
     end
 
+    # Allow different collections to accrue
+    # debt at different rates.
+    def weight!(weightings)
+      weightings.each do |name, weight|
+        collection_for(name).weight = weight
+      end
+    end
+
     # Clears pending jobs from the scheduler,
     # but doesn't wipe accrued debt.
     def clear!
@@ -24,9 +37,15 @@ module Hobble
     end
 
     # Executes `action' for each job in a sensible
-    # order, and finishes when done.
-    def run(&action)
-      loop { break unless run_once(&action) }
+    # order, and finishes when done. An optional
+    # argument can be used to limit the number of runs.
+    def run(maximum_runs = 0, &action)
+      times_run = 0
+      loop do
+        times_run +=1 if ran = run_once(&action)
+        enough_runs = (maximum_runs > 0) && (times_run >= maximum_runs)
+        break if enough_runs || !ran
+      end
     end
 
     private
@@ -34,6 +53,11 @@ module Hobble
     # Execute `action' for the next ready
     # collection, if there is one.
     def run_once(&action)
+      if @populator
+        clear!
+        schedule(@populator.call)
+      end
+
       collection = next_ready
       collection.clock(&action) if collection
       collection

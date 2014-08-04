@@ -9,6 +9,10 @@ class TestCollection < Minitest::Test
     end
 
     describe '#new' do
+      before do
+        @with_options = Hobble::Collection.new('foo', 3, 2)
+      end
+
       it 'should set the collection name' do
         assert_equal 'foo', @collection.name
       end
@@ -17,8 +21,16 @@ class TestCollection < Minitest::Test
         assert_equal 0, @collection.debt
       end
 
-      it 'should set the debt another value if provided' do
-        assert_equal 1, Hobble::Collection.new('foo', 1).debt
+      it 'should set the debt to another value if provided' do
+        assert_equal 3 * 2, @with_options.debt
+      end
+
+      it 'should set the weight to 1 by default' do
+        assert_equal 1, @collection.weight
+      end
+
+      it 'should set the weight if provided' do
+        assert_equal 2, @with_options.weight
       end
 
       it 'should initialize empty items' do
@@ -49,7 +61,8 @@ class TestCollection < Minitest::Test
         end
 
         it 'should swap equally with equally indebted collections' do
-          @a, @b = Hobble::Collection.new('foo'), Hobble::Collection.new('bar')
+          @a = Hobble::Collection.new('foo')
+          @b = Hobble::Collection.new('bar')
 
           assert_equal [@b, @a], [@a, @b].sort
           assert_equal [@a, @b], [@a, @b].sort.sort
@@ -86,6 +99,22 @@ class TestCollection < Minitest::Test
           previous = @collection.debt
           @collection.clock { |n,i| sleep(1e-3) }
           assert @collection.debt > previous
+        end
+
+        describe 'when weighted' do
+          before do
+            @collection.weight = 5
+          end
+
+          it 'should factor weight when accruing debt' do
+            prior_debt = @collection.debt
+
+            @collection.stub(:time, 3) do
+              @collection.clock { |n,i| }
+            end
+
+            assert_equal 3 * 5, @collection.debt - prior_debt
+          end
         end
       end
     end

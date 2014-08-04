@@ -13,13 +13,19 @@ Installation
 Hobble is available as a gem, so simply run:
 
 ```
-gem install hobble
+$ gem install hobble
 ```
 
 Alternatively, you can add `hobble` to your Gemfile:
 
 ```ruby
 gem 'hobble'
+```
+
+Followed by:
+
+```
+$ bundle install
 ```
 
 Usage
@@ -43,8 +49,26 @@ Usage
 end
 ```
 
-Here, internally, each user's queue (a `Hobble::Collection`) maintains
-a counter of how much time has been devoted to running that user's tasks.
+Here, each user's queue (a `Hobble::Collection`) maintains a counter
+of how much time has been devoted to running that user's tasks.
+
+Alternatively, you can specify the items using a block, which
+is re-evaluated after each item is run:
+
+```ruby
+@hobble = Hobble.schedule { Tasks.pending.group_by(&:user) }
+
+# Once a minute, run all pending tasks:
+loop do
+  puts 'Running all pending tasks...'
+  @hobble.run do |user, tasks|
+    Task.process(tasks.shift, for: user)
+  end
+
+  puts 'Waiting for more tasks...'
+  sleep(60)
+end
+```
 
 Processing time is made available to the pending collection with the least
 accrued time. The sort is not stable, to encourage variation in the case of a tie.
@@ -54,20 +78,4 @@ When there are no matching collections, hobble's work is done!
 TODO
 =====
 
-```ruby
-# Have #schedule receive a callable object, to be executed after each task completes:
-@hobble = Hobble.schedule(-> { Task.pending.group_by(&:user) })
-@hobble.run do |user, tasks|
-  Task.process(tasks.shift, for: user)
-  
-  # This loop will run for ever, so escape:
-  break if task_limit_reached?
-end
-
-# The ability to run for a fixed maximum number of iterations:
-@hobble.run(3) { |user, tasks| ... }
-
-# Ability to alter the rate at which individual
-# collections build up time debt:
-@hobble.weight(user => multiplier)
-```
+Nothing outstanding.
