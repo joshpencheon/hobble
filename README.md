@@ -66,4 +66,8 @@ end
 
 # The ability to run for a fixed maximum number of iterations:
 @hobble.run(3) { |user, tasks| ... }
+
+# Ability to alter the rate at which individual
+# collections build up time debt:
+@hobble.weight(user => multiplier)
 ```
