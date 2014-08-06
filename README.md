@@ -1,7 +1,5 @@
-hobble
+hobble [![Build Status](https://travis-ci.org/joshpencheon/hobble.svg?branch=master)](https://travis-ci.org/joshpencheon/hobble) [![Gem Version](https://badge.fury.io/rb/hobble.svg)](http://badge.fury.io/rb/hobble)
 ======
-
-[![Build Status](https://travis-ci.org/joshpencheon/hobble.svg?branch=master)](https://travis-ci.org/joshpencheon/hobble)
 
 Ruby debt-based scheduling implementation.
 
