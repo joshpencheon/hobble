@@ -1,4 +1,4 @@
-hobble [![Build Status](https://travis-ci.org/joshpencheon/hobble.svg?branch=master)](https://travis-ci.org/joshpencheon/hobble) [![Gem Version](https://badge.fury.io/rb/hobble.svg)](http://badge.fury.io/rb/hobble)
+hobble [![Build Status](https://github.com/joshpencheon/hobble/workflows/tests/badge.svg)](https://github.com/joshpencheon/hobble/actions?query=workflow%3Atests) [![Gem Version](https://badge.fury.io/rb/hobble.svg)](http://badge.fury.io/rb/hobble)
 ======
 
 Ruby debt-based scheduling implementation.
