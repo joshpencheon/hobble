@@ -71,9 +71,15 @@ end
 Processing time is made available to the pending collection with the least
 accrued time. The sort is not stable, to encourage variation in the case of a tie.
 
+If necessary, it is possible to weight different users to accrue time differently:
+
+
+```ruby
+# Have `jack` burn time at twice the default rate, and `jill` accrue at a quarter rate:
+@hobble.weight!({
+  jack: 2,
+  jill: 0.25
+})
+```
+
 When there are no matching collections, hobble's work is done!
-
-TODO
-=====
-
-Nothing outstanding.
