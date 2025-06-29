@@ -10,6 +10,6 @@ Gem::Specification.new do |gem|
   gem.date        = '2014-08-04'
   gem.files       = ['lib/hobble.rb', 'lib/hobble/scheduler.rb', 'lib/hobble/collection.rb']
 
-  gem.add_development_dependency 'minitest', '~> 5.4'
+  gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'rake'
 end
