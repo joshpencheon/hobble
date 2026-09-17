@@ -75,7 +75,7 @@ class TestScheduler < Minitest::Test
           assert_equal minimum_debt, collection.debt
 
           # Accrue some debt:
-          sleep(items.shift.to_f / 1e4)
+          sleep(items.shift.to_f / 1e3)
         end
       end
 
