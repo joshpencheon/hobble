@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'hobble'
+require 'test_helper'
 
 class TestHobble < Minitest::Test
 

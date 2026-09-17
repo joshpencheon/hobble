@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'hobble/collection'
+require 'test_helper'
 
 class TestCollection < Minitest::Test
 

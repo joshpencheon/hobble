@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'hobble/scheduler'
+require 'test_helper'
 
 class TestScheduler < Minitest::Test
 
